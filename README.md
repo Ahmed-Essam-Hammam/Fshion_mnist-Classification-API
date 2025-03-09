@@ -18,7 +18,7 @@ The API allows users to upload an image, and it returns the predicted class alon
 ## Installation
 ### Clone the repository:
 ```bash
-git clone https://github.com/yourusername/fashion-mnist-classification-api.git
+git clone https://github.com/Ahmed-Essam-Hammam/Fshion_mnist-Classification-API.git
 cd fashion-mnist-classification-api
 ```
 
