@@ -1,98 +1,81 @@
-# Titanic Survival Prediction API
-> A FastAPI service that predicts passenger survival probability using a trained neural network model.
+# Fashion MNIST Classification API
 
-### Project Structure
-``` bash
-├── .env
-├── .env.example
-├── .gitignore
-├── main.py
-├── README.md
-├── requirements.txt
-└── src
-    ├── inference.py
-    ├── __init__.py
-    ├── artifacts
-    │   ├── best_model.keras
-    │   └── preprocessor.joblib
-    └── utils
-        ├── config.py
-        ├── request.py
-        ├── response.py
-        └── __init__.py
-```
-### Setup
-1. Clone the repository
-2. Create virtual environment: `python -m venv venv`
-3. Activate virtual environment:
-   - Windows: `venv\Scripts\activate`
-   - Unix/MacOS: `source venv/bin/activate`
-4. Install dependencies: `pip install -r requirements.txt`
-5. Copy `.env.example` to `.env` and fill in the values
+## Overview
+This project provides a REST API for classifying images from the Fashion MNIST dataset. The API takes an image as input, processes it using a trained deep learning model, and returns the predicted class.
 
-## Usage
-Run the server:
-```bash
-uvicorn main:app --reload
+## Features
+- Accepts image input for classification
+- Uses a trained deep learning model for prediction
+- Provides JSON responses with predicted class labels
+
+## Requirements
+Ensure you have the following installed:
+
+- Python 3.8+
+- Flask
+- TensorFlow/Keras
+- NumPy
+- Pillow
+
+Install dependencies using:
+```sh
+pip install -r requirements.txt
 ```
 
-#### The API will be available at `http://localhost:8000`
-* Endpoints
-    * GET /: Health check
-    * POST /classify: Predict survival probability
+## API Endpoints
 
-### `Example Request`
-``` bash
-[
-    {
-        "passenger_id": 1,
-        "age": 22.0,
-        "fare": 7.25,
-        "sex": "male",
-        "embarked": "S",
-        "parch": 0,
-        "sibsp": 1,
-        "pclass": 3
-    },
-    {
-        "passenger_id": 2,
-        "age": 29.0,
-        "fare": 15.50,
-        "sex": "female",
-        "embarked": "C",
-        "parch": 1,
-        "sibsp": 0,
-        "pclass": 2
-    },
-    {
-        "passenger_id": 3,
-        "age": 35.0,
-        "fare": 50.00,
-        "sex": "male",
-        "embarked": "Q",
-        "parch": 0,
-        "sibsp": 0,
-        "pclass": 1
-    },
-    {
-        "passenger_id": 4,
-        "age": 18.0,
-        "fare": 5.00,
-        "sex": "female",
-        "embarked": "S",
-        "parch": 2,
-        "sibsp": 3,
-        "pclass": 3
-    },
-    {
-        "passenger_id": 5,
-        "age": 42.0,
-        "fare": 80.00,
-        "sex": "male",
-        "embarked": "C",
-        "parch": 1,
-        "sibsp": 0,
-        "pclass": 1
-    }
-]
+### 1. Predict Image Class
+#### Endpoint:
+```http
+POST /predict
 ```
+#### Request:
+- Content-Type: `multipart/form-data`
+- Parameter: `image` (Upload an image file in grayscale format)
+
+#### Example Usage:
+```sh
+curl -X POST -F "image=@sample_image.png" http://localhost:5000/predict
+```
+
+#### Response:
+```json
+{
+  "class": "T-shirt/top",
+  "confidence": 0.98
+}
+```
+
+## Running the API
+1. Clone the repository:
+```sh
+git clone <repository_url>
+```
+2. Navigate to the project folder:
+```sh
+cd fashion-mnist-api
+```
+3. Run the API:
+```sh
+python app.py
+```
+4. Access the API at:
+```http
+http://localhost:5000
+```
+
+## Model Training
+If you need to train or retrain the model, run:
+```sh
+python train.py
+```
+This will generate a new trained model that the API will use for classification.
+
+## Deployment
+For deploying on a production server, consider using Gunicorn:
+```sh
+gunicorn -w 4 -b 0.0.0.0:5000 app:app
+```
+
+## License
+This project is open-source and available under the MIT License.
